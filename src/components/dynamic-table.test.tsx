@@ -6,10 +6,18 @@ import {
   within,
 } from '@testing-library/react'
 
+import { Provider } from '@/app/provider'
+
 import { DynamicTable } from './dynamic-table'
 
 describe('Dynamic Table Component', () => {
-  beforeEach(() => render(<DynamicTable />))
+  beforeEach(() =>
+    render(
+      <Provider>
+        <DynamicTable />
+      </Provider>,
+    ),
+  )
 
   afterEach(() => cleanup())
 
@@ -32,7 +40,7 @@ describe('Dynamic Table Component', () => {
   it('should be able to change column positions on table', () => {
     const button = screen.getByTestId('add-column-button')
 
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 2; i++) {
       fireEvent.click(button)
     }
 

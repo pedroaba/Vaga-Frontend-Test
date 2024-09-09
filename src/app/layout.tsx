@@ -5,6 +5,8 @@ import { Inter } from 'next/font/google'
 
 import { cn } from '@/lib/utils'
 
+import { Provider } from './provider'
+
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
@@ -28,7 +30,7 @@ export default function RootLayout({
           'antialiased w-screen h-screen min-w-screen min-h-screen',
         )}
       >
-        {children}
+        <Provider>{children}</Provider>
       </body>
     </html>
   )

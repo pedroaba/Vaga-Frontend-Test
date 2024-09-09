@@ -1,44 +1,38 @@
 'use client'
 
 import { Plus } from 'lucide-react'
-import { useState } from 'react'
+
+import { useBoard } from '@/hooks/use-board'
 
 import { Column } from './column'
 import { Button } from './ui/button'
 
-type ColumnData = {
-  id: string
-  position: number
-  title: string
-}
-
 export function DynamicTable() {
-  const [columns, setColumns] = useState<ColumnData[]>([])
+  const { table, addNewColumn, changeOrderOfTableColumns } = useBoard()
 
   function handleChangeColumnPosition(columnId: string, dir: 'right' | 'left') {
-    const columnsIndex = columns.findIndex((column) => column.id === columnId)
+    const columnsIndex = table.columns.findIndex(
+      (column) => column.id === columnId,
+    )
     if (columnsIndex === -1) return
 
     const newColumnsPosition =
       dir === 'right' ? columnsIndex + 1 : columnsIndex - 1
 
-    const [removed] = columns.splice(columnsIndex, 1)
-    columns.splice(newColumnsPosition, 0, removed)
+    const [removed] = table.columns.splice(columnsIndex, 1)
+    table.columns.splice(newColumnsPosition, 0, removed)
 
-    setColumns([
-      ...columns.map((column, position) => ({ ...column, position })),
+    changeOrderOfTableColumns([
+      ...table.columns.map((column, position) => ({ ...column, position })),
     ])
   }
 
   function handleAddColumn() {
-    setColumns((state) => [
-      ...state,
-      {
-        id: crypto.randomUUID(),
-        position: state.length,
-        title: `Column ${state.length + 1}`,
-      },
-    ])
+    addNewColumn({
+      id: crypto.randomUUID(),
+      position: table.columns.length,
+      title: `Column ${table.columns.length + 1}`,
+    })
   }
 
   return (
@@ -56,10 +50,10 @@ export function DynamicTable() {
         data-testid="table-body"
         className="h-[calc(100%-40px)] w-full flex overflow-x-auto divide-x-2 divide-zinc-500 transition-all"
       >
-        {columns.map((column) => (
+        {table.columns.map((column) => (
           <Column
             isFirstColumn={column.position === 0}
-            isLastColumn={column.position >= columns.length - 1}
+            isLastColumn={column.position >= table.columns.length - 1}
             title={column.title}
             key={column.id}
             id={column.id}
