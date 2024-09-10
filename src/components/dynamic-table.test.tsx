@@ -1,23 +1,11 @@
-import {
-  cleanup,
-  fireEvent,
-  render,
-  screen,
-  within,
-} from '@testing-library/react'
+import { cleanup, fireEvent, screen, within } from '@testing-library/react'
 
-import { Provider } from '@/app/provider'
+import { renderWithProvider } from '@/utils/jest/provider-render'
 
 import { DynamicTable } from './dynamic-table'
 
 describe('Dynamic Table Component', () => {
-  beforeEach(() =>
-    render(
-      <Provider>
-        <DynamicTable />
-      </Provider>,
-    ),
-  )
+  beforeEach(() => renderWithProvider(<DynamicTable />))
 
   afterEach(() => cleanup())
 

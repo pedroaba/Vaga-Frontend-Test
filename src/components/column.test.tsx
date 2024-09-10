@@ -8,6 +8,8 @@ let handleChangeColumnPositionSpy: jest.Mock<
   any
 >
 
+let handleColumnClickSpy: jest.Mock<Promise<void>, [columnId: string], any>
+
 describe('Column Component', () => {
   beforeEach(() => {
     handleChangeColumnPositionSpy = jest.fn(
@@ -16,8 +18,11 @@ describe('Column Component', () => {
       },
     )
 
+    handleColumnClickSpy = jest.fn()
+
     render(
       <Column
+        onColumnClick={handleColumnClickSpy}
         id="column-id"
         isFirstColumn
         isLastColumn
@@ -56,6 +61,7 @@ describe('Column Component', () => {
     cleanup()
     render(
       <Column
+        onColumnClick={handleColumnClickSpy}
         id="column-id"
         onChangeColumnPosition={handleChangeColumnPositionSpy}
         title="Coluna de teste"
@@ -76,6 +82,7 @@ describe('Column Component', () => {
     cleanup()
     render(
       <Column
+        onColumnClick={handleColumnClickSpy}
         id="column-id"
         onChangeColumnPosition={handleChangeColumnPositionSpy}
         title="Coluna de teste"
@@ -96,6 +103,7 @@ describe('Column Component', () => {
     cleanup()
     render(
       <Column
+        onColumnClick={handleColumnClickSpy}
         id="column-id"
         isFirstColumn
         onChangeColumnPosition={handleChangeColumnPositionSpy}
@@ -113,6 +121,7 @@ describe('Column Component', () => {
     cleanup()
     render(
       <Column
+        onColumnClick={handleColumnClickSpy}
         id="column-id"
         isLastColumn
         onChangeColumnPosition={handleChangeColumnPositionSpy}

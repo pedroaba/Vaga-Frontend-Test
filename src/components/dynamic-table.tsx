@@ -3,12 +3,20 @@
 import { Plus } from 'lucide-react'
 
 import { useBoard } from '@/hooks/use-board'
+import { cn } from '@/lib/utils'
 
 import { Column } from './column'
 import { Button } from './ui/button'
 
 export function DynamicTable() {
-  const { table, addNewColumn, changeOrderOfTableColumns } = useBoard()
+  const {
+    table,
+    addNewColumn,
+    changeOrderOfTableColumns,
+    isInPreview,
+    selectAColumn,
+    selectTable,
+  } = useBoard()
 
   function handleChangeColumnPosition(columnId: string, dir: 'right' | 'left') {
     const columnsIndex = table.columns.findIndex(
@@ -35,23 +43,35 @@ export function DynamicTable() {
     })
   }
 
+  function handleColumnClick(columnId: string) {
+    selectAColumn(columnId)
+  }
+
   return (
     <div
       data-testid="dynamic-table"
-      className="min-w-[600px] max-w-[650px] h-64 bg-zinc-800 rounded-md shadow-lg shadow-zinc-700"
+      className={cn(
+        'min-w-[600px] max-w-[650px] h-64 bg-zinc-800 overflow-y-hidden rounded-md shadow-lg shadow-zinc-700',
+        isInPreview && 'overflow-y-auto',
+      )}
     >
       <div
+        onClick={selectTable}
         data-testid="table-head"
         className="w-full h-10 bg-zinc-900 rounded-t-md flex items-center px-4"
       >
-        <span data-testid="table-title">Tabela de teste</span>
+        <span data-testid="table-title">{table.title}</span>
       </div>
       <div
         data-testid="table-body"
-        className="h-[calc(100%-40px)] w-full flex overflow-x-auto divide-x-2 divide-zinc-500 transition-all"
+        className={cn(
+          'h-[calc(100%-40px)] overflow-y-hidden w-full flex overflow-x-auto duration-1000 divide-x-2 divide-zinc-500 transition-all',
+        )}
       >
         {table.columns.map((column) => (
           <Column
+            onColumnClick={handleColumnClick}
+            isInPreview={isInPreview}
             isFirstColumn={column.position === 0}
             isLastColumn={column.position >= table.columns.length - 1}
             title={column.title}
@@ -61,14 +81,16 @@ export function DynamicTable() {
           />
         ))}
 
-        <Button
-          data-testid="add-column-button"
-          className="bg-transparent rounded-none h-full min-w-48 flex justify-center items-center gap-2 text-zinc-400 cursor-pointer"
-          onClick={handleAddColumn}
-        >
-          <Plus className="size-5" />
-          Add
-        </Button>
+        {!isInPreview && (
+          <Button
+            data-testid="add-column-button"
+            className="bg-transparent rounded-none h-full min-w-48 flex justify-center items-center gap-2 text-zinc-400 cursor-pointer"
+            onClick={handleAddColumn}
+          >
+            <Plus className="size-5" />
+            Add
+          </Button>
+        )}
       </div>
     </div>
   )
