@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Montador de tabelas
 
-## Getting Started
+## Requisitos
 
-First, run the development server:
+- [ ] [NodeJS LTS](https://nodejs.org/en)
+- [ ] [NextJS v14](https://nextjs.org/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Instalação
+
+Para poder instalar ele localmente precisamos apenas executar os comandos de instalação padrão do NodeJS com qualquer gerenciador de pacote:
+
+```shell
+> $ pnpm i
+# ou
+> $ npm i
+# ou
+> $ yarn
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Executando o projeto
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Para a execução do projeto, é tão simples quanto a instalação, você precisará executar apenas um comando com qualquer gerenciador de pacote de sua preferência (o mesmo que foi utilizado na instalação):
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```shell
+> $ pnpm dev
+# ou
+> $ npm run dev
+# ou
+> $ yarn dev
+```
 
-## Learn More
+Depois do comando executado, você poderá acessar o projeto [Montador de tabelas](http://localhost:3000)
 
-To learn more about Next.js, take a look at the following resources:
+## Documentação do Montador de tabelas
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+O projeto consiste em um frontend simples onde há uma tabela onde o usuário poderá trocar o título da tabela e das colunas, e quando passado para o modo preview irá mostrar como a tabela ficaria preenchida com dados
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+<video controls src="./docs/demonstration.mp4"></video>
 
-## Deploy on Vercel
+Ele foi construído com NextJs & ReactJS na sua ultima versão e Jest para os testes. Foi decidido uma estrutura simples para poder realizar a organização de arquivos:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+#### 📂 Components
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Essa pasta é responsável por guardar todos os componentes que são utilizados na aplicação, além dos componentes que são instalados pela biblioteca ShadCn UI (semelhante a material ui, porém com uma outra estratégia/abordagem)
+
+#### 📂 Context
+
+Responsável por guardar o contexto da aplicação, com os estados compartilhados entre os componentes e algumas funções para manipular esses estados.
+
+#### 📂 Hooks
+
+Armazena os hooks que foram criados na aplicação, no caso está armazenando um hook para ajudar no acesso ao contexto.
+
+#### 📂 Lib
+
+Onde está as configurações para a biblioteca ShadCn
+
+#### 📂 Utils
+
+Alguns utilitários utilizados/funções na aplicação
